@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Category Filter</title>
+
+<style>
+body{
+  font-family: Arial;
+  background:#f2f2f2;
+  padding:20px;
+  text-align:center;
+}
+
+select{
+  padding:10px;
+  font-size:16px;
+  margin-bottom:20px;
+}
+
+.products{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+  gap:20px;
+}
+
+.card{
+  background:white;
+  padding:20px;
+  border-radius:8px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.1);
+  transition:0.3s;
+}
+
+.card:hover{
+  transform:scale(1.05);
+}
+</style>
+</head>
+
+<body>
+
+<h2>Product Store</h2>
+
+<select id="category" onchange="filterProducts()">
+  <option value="all">All</option>
+  <option value="clothing">Clothing</option>
+  <option value="electronics">Electronics</option>
+  <option value="food">Food</option>
+</select>
+
+<div class="products" id="products"></div>
+
+<script>
+let products = [
+  { name: "T-Shirt", category: "clothing" },
+  { name: "Jeans", category: "clothing" },
+  { name: "Laptop", category: "electronics" },
+  { name: "Headphones", category: "electronics" },
+  { name: "Pizza", category: "food" },
+  { name: "Burger", category: "food" }
+];
+
+function displayProducts(data){
+  let box = document.getElementById("products");
+  box.innerHTML = "";
+
+  data.forEach(p => {
+    box.innerHTML += `
+      <div class="card">
+        <h3>${p.name}</h3>
+        <p>${p.category}</p>
+      </div>
+    `;
+  });
+}
+
+function filterProducts(){
+  let cat = document.getElementById("category").value;
+
+  if(cat === "all"){
+    displayProducts(products);
+  } else {
+    let filtered = products.filter(p => p.category === cat);
+    displayProducts(filtered);
+  }
+}
+
+displayProducts(products);
+</script>
+
+</body>
+</html>
