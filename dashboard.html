@@ -1,128 +1,152 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<title>Admin Dashboard</title>
+    <title>Control Panel</title>
 
-<style>
-:root{
-  --bg: #ffffff;
-  --card: #ffffff;
-  --text: #222;
-  --primary: #4f46e5;
-}
-
-.dark{
-  --bg: #121212;
-  --card: #1e1e1e;
-  --text: #ffffff;
-  --primary: #818cf8;
-}
-
-body{
-  margin:0;
-  font-family: Arial;
-  background:var(--bg);
-  color:var(--text);
-}
-
-.dashboard{
-  display:grid;
-  grid-template-columns: 200px 1fr;
-  grid-template-rows: 60px 1fr;
-  height:100vh;
-}
-
-.header{
-  grid-column: 1 / 3;
-  background:var(--card);
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:0 20px;
-  box-shadow:0 2px 5px rgba(0,0,0,0.1);
-}
-
-.sidebar{
-  background:var(--card);
-  padding:20px;
-}
-
-.main{
-  padding:20px;
-  display:grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
-  gap:20px;
-}
-
-.card{
-  background:var(--card);
-  padding:20px;
-  border-radius:10px;
-  box-shadow:0 4px 10px rgba(0,0,0,0.1);
-}
-
-.toggle{
-  background:var(--primary);
-  color:white;
-  border:none;
-  padding:8px 15px;
-  border-radius:5px;
-  cursor:pointer;
-}
-
-@media(max-width:600px){
-  .dashboard{
-    grid-template-columns: 1fr;
-    grid-template-rows: 60px auto 1fr;
-  }
-  .sidebar{
-    grid-row:2;
-  }
-}
-</style>
+    <style>
+         :root {
+            --bg: #f9fafb;
+            --card: #ffffff;
+            --text: #1f2937;
+            --primary: #16a34a;
+        }
+        
+        .dark {
+            --bg: #0f172a;
+            --card: #1e293b;
+            --text: #e5e7eb;
+            --primary: #22c55e;
+        }
+        
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Arial;
+            background: var(--bg);
+            color: var(--text);
+        }
+        
+        .dashboard {
+            display: grid;
+            grid-template-columns: 220px 1fr;
+            grid-template-rows: 60px 1fr;
+            height: 100vh;
+        }
+        
+        .header {
+            grid-column: 1 / 3;
+            background: var(--card);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+        }
+        
+        .sidebar {
+            background: var(--card);
+            padding: 20px;
+        }
+        
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .sidebar li {
+            padding: 10px;
+            margin-bottom: 8px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        
+        .sidebar li:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .main {
+            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+        
+        .card {
+            background: var(--card);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .toggle {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+        
+        @media(max-width:600px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+                grid-template-rows: 60px auto 1fr;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-<div class="dashboard">
+    <div class="dashboard">
 
-  <div class="header">
-    <h3>Admin Dashboard</h3>
-    <button class="toggle" onclick="toggleTheme()">Change mode</button>
-  </div>
+        <div class="header">
+            <h3>Control Panel</h3>
+            <button class="toggle" onclick="toggleTheme()">Toggle Theme</button>
+        </div>
 
-  <div class="sidebar">
-    <p>Dashboard</p>
-    <p>Users</p>
-    <p>Settings</p>
-  </div>
+        <div class="sidebar">
+            <ul>
+                <li>Overview</li>
+                <li>Customers</li>
+                <li>Reports</li>
+                <li>Settings</li>
+            </ul>
+        </div>
 
-  <div class="main">
-    <div class="card">Total Users<br><b>1200</b></div>
-    <div class="card">Revenue<br><b>$5300</b></div>
-    <div class="card">Orders<br><b>340</b></div>
-    <div class="card">Visitors<br><b>4300</b></div>
-  </div>
+        <div class="main">
+            <div class="card">👥 Active Users<br><b>1,245</b></div>
+            <div class="card">💰 Monthly Revenue<br><b>$6,120</b></div>
+            <div class="card">📦 New Orders<br><b>389</b></div>
+            <div class="card">🌐 Site Visits<br><b>4,890</b></div>
+        </div>
 
-</div>
+    </div>
 
-<script>
-let theme = localStorage.getItem("theme");
+    <script>
+        let theme = localStorage.getItem("theme");
 
-if(theme === "dark"){
-  document.body.classList.add("dark");
-}
+        if (theme === "dark") {
+            document.body.classList.add("dark");
+        }
 
-function toggleTheme(){
-  document.body.classList.toggle("dark");
+        function toggleTheme() {
+            document.body.classList.toggle("dark");
 
-  if(document.body.classList.contains("dark")){
-    localStorage.setItem("theme","dark");
-  }else{
-    localStorage.setItem("theme","light");
-  }
-}
-</script>
+            if (document.body.classList.contains("dark")) {
+                localStorage.setItem("theme", "dark");
+            } else {
+                localStorage.setItem("theme", "light");
+            }
+        }
+    </script>
 
 </body>
+
 </html>
