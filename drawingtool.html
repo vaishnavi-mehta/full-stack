@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SVG Drawing Tool</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        #toolbar {
+            margin: 10px;
+        }
+
+        svg {
+            width: 80vw;
+            height: 60vh;
+            border: 2px solid black;
+            background-color: white;
+            cursor: crosshair;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>SVG Drawing Tool</h2>
+
+    <div id="toolbar">
+        Color:
+        <input type="color" id="colorPicker" value="#000000">
+        <button onclick="undo()">Undo</button>
+    </div>
+
+    <svg id="canvas"></svg>
+
+    <script>
+        const svg = document.getElementById("canvas");
+        const colorPicker = document.getElementById("colorPicker");
+
+        let drawing = false;
+        let currentPath;
+        let paths = [];
+
+        svg.addEventListener("mousedown", (e) => {
+            drawing = true;
+
+            currentPath = document.createElementNS(
+                "http://www.w3.org/2000/svg",
+                "path"
+            );
+
+            const x = e.offsetX;
+            const y = e.offsetY;
+
+            currentPath.setAttribute("d", `M ${x} ${y}`);
+            currentPath.setAttribute("stroke", colorPicker.value);
+            currentPath.setAttribute("stroke-width", "2");
+            currentPath.setAttribute("fill", "none");
+
+            svg.appendChild(currentPath);
+            paths.push(currentPath);
+        });
+
+        svg.addEventListener("mousemove", (e) => {
+            if (!drawing) return;
+
+            const x = e.offsetX;
+            const y = e.offsetY;
+
+            let d = currentPath.getAttribute("d");
+            currentPath.setAttribute("d", d + ` L ${x} ${y}`);
+        });
+
+        svg.addEventListener("mouseup", () => {
+            drawing = false;
+        });
+
+        svg.addEventListener("mouseleave", () => {
+            drawing = false;
+        });
+
+        function undo() {
+            if (paths.length > 0) {
+                const lastPath = paths.pop();
+                svg.removeChild(lastPath);
+            }
+        }
+    </script>
+
+</body>
+</html>
